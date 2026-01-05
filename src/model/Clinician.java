@@ -1,4 +1,4 @@
-package model.people;
+package model;
 
 public abstract class Clinician extends Staff {
 

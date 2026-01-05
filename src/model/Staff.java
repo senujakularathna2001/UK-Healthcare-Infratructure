@@ -1,4 +1,4 @@
-package model.people;
+package model;
 
 public abstract class Staff extends Person {
     protected String role;
