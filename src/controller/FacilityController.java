@@ -11,18 +11,16 @@ public class FacilityController {
         Map<String, String> map = new LinkedHashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(FILE))) {
-            br.readLine(); // skip header
+            br.readLine();
             String line;
 
             while ((line = br.readLine()) != null) {
                 String[] d = line.split(",");
 
-                // facility_type column
                 String type = d[2].toLowerCase();
 
-                // Accept realistic GP identifiers
                 if (type.contains("gp")) {
-                    map.put(d[0], d[1]); // id → name
+                    map.put(d[0], d[1]);
                 }
             }
         } catch (Exception e) {
@@ -43,5 +41,21 @@ public class FacilityController {
             e.printStackTrace();
         }
         return id;
+    }
+
+    public String getFacilityIdByName(String name) {
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE))) {
+            br.readLine();
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] d = line.split(",");
+                if (d[1].equalsIgnoreCase(name)) {
+                    return d[0];
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return name;
     }
 }

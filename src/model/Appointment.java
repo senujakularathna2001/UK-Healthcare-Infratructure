@@ -11,8 +11,9 @@ public class Appointment {
     private int durationMinutes;
     private String type;
     private String status;
+    private String notes;
 
-    public Appointment(String appointmentID, String patientID, String clinicianID, String facilityID, String appointmentDate, String appointmentTime, int durationMinutes, String type, String status) {
+    public Appointment(String appointmentID, String patientID, String clinicianID, String facilityID, String appointmentDate, String appointmentTime, int durationMinutes, String type, String status, String notes) {
 
         this.appointmentID = appointmentID;
         this.patientID = patientID;
@@ -23,6 +24,7 @@ public class Appointment {
         this.durationMinutes = durationMinutes;
         this.type = type;
         this.status = status;
+        this.notes = notes;
     }
 
     public String getAppointmentID() {
@@ -61,7 +63,15 @@ public class Appointment {
         return status;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
     public String toCsv() {
         return String.join(",", appointmentID, patientID, clinicianID, facilityID, appointmentDate, appointmentTime, String.valueOf(durationMinutes), type, status);
+    }
+
+    public String toFileString() {
+        return appointmentID + "," + patientID + "," + clinicianID + "," + facilityID + "," + appointmentDate + "," + appointmentTime + "," + durationMinutes + "," + type + "," + status + "," + notes;
     }
 }

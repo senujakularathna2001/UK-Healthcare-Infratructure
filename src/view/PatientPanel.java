@@ -223,7 +223,7 @@ public class PatientPanel extends JPanel {
                 time.getText(),
                 Integer.parseInt(duration.getText()),
                 type.getText(),
-                "Scheduled"
+                "Scheduled",""
         );
 
         appointmentController.addAppointment(a);
@@ -247,7 +247,7 @@ public class PatientPanel extends JPanel {
                 appointmentTableModel.getValueAt(r, 4).toString(),
                 Integer.parseInt(appointmentTableModel.getValueAt(r, 5).toString()),
                 appointmentTableModel.getValueAt(r, 6).toString(),
-                appointmentTableModel.getValueAt(r, 7).toString()
+                appointmentTableModel.getValueAt(r, 7).toString(),""
         );
 
         appointmentController.updateAppointment(a);

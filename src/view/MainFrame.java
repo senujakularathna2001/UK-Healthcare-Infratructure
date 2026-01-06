@@ -27,9 +27,9 @@ public class MainFrame extends JFrame {
         } else if (role.equals("Specialist")) {
             tabs.add("View Referrals", new ReferralPanel());
         } else if (role.equals("Nurse")) {
-            tabs.add("Treatment Notes", new NursePanel());
+            tabs.add("Treatment Notes", new NursePanel(this));
         } else if (role.equals("Admin")) {
-            tabs.add("Admin", new AdminPanel());
+            tabs.add("Admin", new AdminPanel(this));
             tabs.add("Appointments", new AppointmentPanel());
         }
 

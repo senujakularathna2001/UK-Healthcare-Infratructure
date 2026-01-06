@@ -59,7 +59,7 @@ public class AppointmentPanel extends JPanel {
         int row = table.getSelectedRow();
         if (row == -1) return;
 
-        Appointment a = new Appointment(model.getValueAt(row, 0).toString(), model.getValueAt(row, 1).toString(), model.getValueAt(row, 2).toString(), model.getValueAt(row, 3).toString(), model.getValueAt(row, 4).toString(), model.getValueAt(row, 5).toString(), Integer.parseInt(model.getValueAt(row, 6).toString()), model.getValueAt(row, 7).toString(), model.getValueAt(row, 8).toString());
+        Appointment a = new Appointment(model.getValueAt(row, 0).toString(), model.getValueAt(row, 1).toString(), model.getValueAt(row, 2).toString(), model.getValueAt(row, 3).toString(), model.getValueAt(row, 4).toString(), model.getValueAt(row, 5).toString(), Integer.parseInt(model.getValueAt(row, 6).toString()), model.getValueAt(row, 7).toString(), model.getValueAt(row, 8).toString(),"");
 
         controller.updateAppointment(a);
         JOptionPane.showMessageDialog(this, "Appointment Updated");

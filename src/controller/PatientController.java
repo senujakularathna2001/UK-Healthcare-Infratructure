@@ -29,11 +29,11 @@ public class PatientController {
                             d[6],  // phone
                             d[7],  // email
                             d[8],  // address
-                            d[10],  // postcode
-                            d[11], // emergency_contact_name
-                            d[12], // emergency_contact_number
-                            d[13], // registration_date
-                            d[14]  // gp_surgery_id
+                            d[9],  // postcode
+                            d[10], // emergency_contact_name
+                            d[11], // emergency_contact_number
+                            d[12], // registration_date
+                            d[13]  // gp_surgery_id
                     );
                 }
             }

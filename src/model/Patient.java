@@ -34,13 +34,11 @@ public class Patient {
         this.gpSurgeryId = gpSurgeryId;
     }
 
-    public String getPatientId()
-    {
+    public String getPatientId() {
         return patientId;
     }
 
-    public String getNhsNumber()
-    {
+    public String getNhsNumber() {
         return nhsNumber;
     }
 
@@ -93,10 +91,6 @@ public class Patient {
     }
 
     public String toCsv() {
-        return String.join(",",
-                patientId, nhsNumber, firstName, lastName, dob, gender,
-                phone, email, address, postcode,
-                emergencyContactName, emergencyContactNumber,
-                registrationDate, gpSurgeryId);
+        return String.join(",", patientId, nhsNumber, firstName, lastName, dob, gender, phone, email, address.replace(",", " "), postcode, emergencyContactName, emergencyContactNumber, registrationDate, gpSurgeryId);
     }
 }

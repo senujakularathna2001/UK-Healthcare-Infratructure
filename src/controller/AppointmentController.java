@@ -23,7 +23,7 @@ public class AppointmentController {
                             d[0], d[1], d[2], d[3],
                             d[4], d[5],
                             Integer.parseInt(d[6]),
-                            d[7], d[8]
+                            d[7], d[8], d.length > 9 ? d[9] : ""
                     ));
                 }
             }
@@ -45,7 +45,7 @@ public class AppointmentController {
                         d[0], d[1], d[2], d[3],
                         d[4], d[5],
                         Integer.parseInt(d[6]),
-                        d[7], d[8]
+                        d[7], d[8] , d.length > 9 ? d[9] : ""
                 ));
             }
         } catch (Exception e) {
@@ -128,5 +128,31 @@ public class AppointmentController {
 
         return String.format("A%03d", max + 1);
     }
+
+    public void updateAppointmentNotes(String appointmentId, String notes) {
+
+        List<String> lines = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("data/appointments.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.startsWith(appointmentId + ",")) {
+                    String[] d = line.split(",", -1);
+                    d[d.length - 1] = notes.replace(",", " ");
+                    line = String.join(",", d);
+                }
+                lines.add(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try (PrintWriter pw = new PrintWriter("data/appointments.csv")) {
+            for (String l : lines) pw.println(l);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
