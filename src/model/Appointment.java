@@ -12,15 +12,7 @@ public class Appointment {
     private String type;
     private String status;
 
-    public Appointment(String appointmentID,
-                       String patientID,
-                       String clinicianID,
-                       String facilityID,
-                       String appointmentDate,
-                       String appointmentTime,
-                       int durationMinutes,
-                       String type,
-                       String status) {
+    public Appointment(String appointmentID, String patientID, String clinicianID, String facilityID, String appointmentDate, String appointmentTime, int durationMinutes, String type, String status) {
 
         this.appointmentID = appointmentID;
         this.patientID = patientID;
@@ -33,15 +25,43 @@ public class Appointment {
         this.status = status;
     }
 
-    public String toFileString() {
-        return appointmentID + "," +
-                patientID + "," +
-                clinicianID + "," +
-                facilityID + "," +
-                appointmentDate + "," +
-                appointmentTime + "," +
-                durationMinutes + "," +
-                type + "," +
-                status;
+    public String getAppointmentID() {
+        return appointmentID;
+    }
+
+    public String getPatientID() {
+        return patientID;
+    }
+
+    public String getClinicianID() {
+        return clinicianID;
+    }
+
+    public String getFacilityID() {
+        return facilityID;
+    }
+
+    public String getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public String getAppointmentTime() {
+        return appointmentTime;
+    }
+
+    public int getDurationMinutes() {
+        return durationMinutes;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String toCsv() {
+        return String.join(",", appointmentID, patientID, clinicianID, facilityID, appointmentDate, appointmentTime, String.valueOf(durationMinutes), type, status);
     }
 }

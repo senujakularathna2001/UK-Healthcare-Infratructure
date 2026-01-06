@@ -20,8 +20,7 @@ public class MainFrame extends JFrame {
         tabs.removeAll();
 
         if (role.equals("Patient")) {
-            tabs.add("Patients", new PatientPanel());
-            tabs.add("Appointments", new AppointmentPanel());
+            tabs.add("Patient", new PatientPanel(this));
         } else if (role.equals("GP")) {
             tabs.add("Referrals", new ReferralPanel());
             tabs.add("Prescriptions", new PrescriptionPanel());
@@ -31,9 +30,17 @@ public class MainFrame extends JFrame {
             tabs.add("Treatment Notes", new NursePanel());
         } else if (role.equals("Admin")) {
             tabs.add("Admin", new AdminPanel());
+            tabs.add("Appointments", new AppointmentPanel());
         }
 
         add(tabs);
+        revalidate();
+        repaint();
+    }
+
+    public void showLogin() {
+        getContentPane().removeAll();
+        add(new LoginPanel(this));
         revalidate();
         repaint();
     }
