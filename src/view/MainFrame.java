@@ -10,7 +10,6 @@ public class MainFrame extends JFrame {
         setTitle("Hospital Management System");
         setSize(900, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         add(new LoginPanel(this));
         setVisible(true);
     }
@@ -21,19 +20,25 @@ public class MainFrame extends JFrame {
 
         if (role.equals("Patient")) {
             tabs.add("Patient", new PatientPanel(this));
+            add(tabs);
+
         } else if (role.equals("GP")) {
-            tabs.add("Referrals", new ReferralPanel());
-            tabs.add("Prescriptions", new PrescriptionPanel());
+            add(new GpDashboardPanel(this));
+
         } else if (role.equals("Specialist")) {
-            tabs.add("View Referrals", new ReferralPanel());
+            tabs.add("View Referrals", new SpecialistPanel(this));
+            add(tabs);
+
         } else if (role.equals("Nurse")) {
             tabs.add("Treatment Notes", new NursePanel(this));
+            add(tabs);
+
         } else if (role.equals("Admin")) {
             tabs.add("Admin", new AdminPanel(this));
             tabs.add("Appointments", new AppointmentPanel());
+            add(tabs);
         }
 
-        add(tabs);
         revalidate();
         repaint();
     }

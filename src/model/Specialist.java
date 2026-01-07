@@ -7,4 +7,8 @@ public class Specialist extends User {
         super(id, name, "Specialist", contact);
         this.field = field;
     }
+
+    public String getField() {
+        return field;
+    }
 }

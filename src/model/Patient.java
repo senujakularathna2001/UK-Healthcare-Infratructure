@@ -3,10 +3,10 @@ package model;
 public class Patient {
 
     private String patientId;
-    private String nhsNumber;
     private String firstName;
     private String lastName;
     private String dob;
+    private String nhsNumber;
     private String gender;
     private String phone;
     private String email;
@@ -17,12 +17,12 @@ public class Patient {
     private String registrationDate;
     private String gpSurgeryId;
 
-    public Patient(String patientId, String nhsNumber, String firstName, String lastName, String dob, String gender, String phone, String email, String address, String postcode, String emergencyContactName, String emergencyContactNumber, String registrationDate, String gpSurgeryId) {
+    public Patient(String patientId, String firstName, String lastName, String dob, String nhsNumber, String gender, String phone, String email, String address, String postcode, String emergencyContactName, String emergencyContactNumber, String registrationDate, String gpSurgeryId) {
         this.patientId = patientId;
-        this.nhsNumber = nhsNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
+        this.nhsNumber = nhsNumber;
         this.gender = gender;
         this.phone = phone;
         this.email = email;
@@ -91,6 +91,6 @@ public class Patient {
     }
 
     public String toCsv() {
-        return String.join(",", patientId, nhsNumber, firstName, lastName, dob, gender, phone, email, address.replace(",", " "), postcode, emergencyContactName, emergencyContactNumber, registrationDate, gpSurgeryId);
+        return String.join(",", patientId, firstName, lastName, dob, nhsNumber, gender, phone, email, address, postcode, emergencyContactName, emergencyContactNumber, registrationDate, gpSurgeryId);
     }
 }

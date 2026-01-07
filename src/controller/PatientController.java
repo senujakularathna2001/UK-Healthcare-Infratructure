@@ -12,28 +12,29 @@ public class PatientController {
 
     public Patient getPatientById(String patientId) {
         try (BufferedReader br = new BufferedReader(new FileReader(FILE))) {
-            br.readLine(); // header
+            br.readLine();
             String line;
 
             while ((line = br.readLine()) != null) {
-                String[] d = line.split(",");
+                String[] d = line.split(",", -1);
+                if (d.length < 14) continue;
 
                 if (d[0].equals(patientId)) {
                     return new Patient(
-                            d[0],  // patient_id
-                            d[4],  // nhs_number
-                            d[1],  // first_name
-                            d[2],  // last_name
-                            d[3],  // dob
-                            d[5],  // gender
-                            d[6],  // phone
-                            d[7],  // email
-                            d[8],  // address
-                            d[9],  // postcode
-                            d[10], // emergency_contact_name
-                            d[11], // emergency_contact_number
-                            d[12], // registration_date
-                            d[13]  // gp_surgery_id
+                            d[0],
+                            d[1],
+                            d[2],
+                            d[3],
+                            d[4],
+                            d[5],
+                            d[6],
+                            d[7],
+                            d[8],
+                            d[9],
+                            d[10],
+                            d[11],
+                            d[12],
+                            d[13]
                     );
                 }
             }
@@ -42,6 +43,7 @@ public class PatientController {
         }
         return null;
     }
+
 
     public List<String> getAllPatientIds() {
         List<String> ids = new ArrayList<>();

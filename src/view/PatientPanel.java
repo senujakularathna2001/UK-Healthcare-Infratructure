@@ -20,8 +20,7 @@ public class PatientPanel extends JPanel {
     private JComboBox<String> patientSelector;
     private JComboBox<String> gpSurgeryBox;
 
-    private JTextField patientId, nhs, first, last, dob, phone, email,
-            address, postcode, ecName, ecPhone, regDate;
+    private JTextField patientId, nhs, first, last, dob, phone, email, address, postcode, ecName, ecPhone, regDate;
     private JComboBox<String> gender;
 
     private JTable appointmentTable;
@@ -34,11 +33,7 @@ public class PatientPanel extends JPanel {
 
         add(createTop(frame), BorderLayout.NORTH);
 
-        JSplitPane splitPane = new JSplitPane(
-                JSplitPane.VERTICAL_SPLIT,
-                createProfile(),
-                createAppointmentsPanel()
-        );
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, createProfile(), createAppointmentsPanel());
         splitPane.setResizeWeight(0.6);
         splitPane.setDividerSize(6);
         splitPane.setBorder(null);
@@ -90,13 +85,12 @@ public class PatientPanel extends JPanel {
         gender = new JComboBox<>(new String[]{"M", "F"});
 
         gpSurgeryBox = new JComboBox<>();
-        facilityController.getGpSurgeries()
-                .forEach((id, name) -> gpSurgeryBox.addItem(id + " - " + name));
+        facilityController.getGpSurgeries().forEach((id, name) -> gpSurgeryBox.addItem(id + " - " + name));
 
         int y = 0;
-        addRow(p, g, y++, "Patient ID", patientId, "NHS Number", nhs);
-        addRow(p, g, y++, "First Name", first, "Last Name", last);
-        addRow(p, g, y++, "DOB", dob, "Gender", gender);
+        addRow(p, g, y++, "Patient ID", patientId, "First Name", first);
+        addRow(p, g, y++, "Last Name", last, "DOB", dob);
+        addRow(p, g, y++, "NHS Number", nhs, "Gender", gender);
         addRow(p, g, y++, "Phone", phone, "Email", email);
         addRow(p, g, y++, "Address", address, "Postcode", postcode);
         addRow(p, g, y++, "Emergency Contact", ecName, "Emergency Phone", ecPhone);
@@ -120,9 +114,7 @@ public class PatientPanel extends JPanel {
         JPanel p = new JPanel(new BorderLayout(5, 5));
         p.setBorder(new TitledBorder("Appointments"));
 
-        appointmentTableModel = new DefaultTableModel(
-                new String[]{"ID", "Clinician", "Facility", "Date", "Time", "Duration", "Type", "Status"}, 0
-        );
+        appointmentTableModel = new DefaultTableModel(new String[]{"ID", "Clinician", "Facility", "Date", "Time", "Duration", "Type", "Status"}, 0);
 
         appointmentTable = new JTable(appointmentTableModel);
         appointmentTable.setRowHeight(22);
@@ -157,10 +149,10 @@ public class PatientPanel extends JPanel {
     private void loadPatient() {
         Patient p = patientController.getPatientById((String) patientSelector.getSelectedItem());
         patientId.setText(p.getPatientId());
-        nhs.setText(p.getNhsNumber());
         first.setText(p.getFirstName());
         last.setText(p.getLastName());
         dob.setText(p.getDob());
+        nhs.setText(p.getNhsNumber());
         gender.setSelectedItem(p.getGender());
         phone.setText(p.getPhone());
         email.setText(p.getEmail());
@@ -177,16 +169,7 @@ public class PatientPanel extends JPanel {
         List<Appointment> list = appointmentController.getAppointmentsForPatient(patientId.getText());
 
         for (Appointment a : list) {
-            appointmentTableModel.addRow(new Object[]{
-                    a.getAppointmentID(),
-                    clinicianController.getClinicianName(a.getClinicianID()),
-                    facilityController.getFacilityName(a.getFacilityID()),
-                    a.getAppointmentDate(),
-                    a.getAppointmentTime(),
-                    a.getDurationMinutes(),
-                    a.getType(),
-                    a.getStatus()
-            });
+            appointmentTableModel.addRow(new Object[]{a.getAppointmentID(), clinicianController.getClinicianName(a.getClinicianID()), facilityController.getFacilityName(a.getFacilityID()), a.getAppointmentDate(), a.getAppointmentTime(), a.getDurationMinutes(), a.getType(), a.getStatus()});
         }
     }
 
@@ -199,32 +182,16 @@ public class PatientPanel extends JPanel {
         JTextField duration = new JTextField();
         JTextField type = new JTextField();
 
-        Object[] fields = {
-                "Clinician", clinicianBox,
-                "Date", date,
-                "Time", time,
-                "Duration", duration,
-                "Type", type
-        };
+        Object[] fields = {"Clinician", clinicianBox, "Date", date, "Time", time, "Duration", duration, "Type", type};
 
-        if (JOptionPane.showConfirmDialog(this, fields, "Create Appointment",
-                JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) return;
+        if (JOptionPane.showConfirmDialog(this, fields, "Create Appointment", JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION)
+            return;
 
         String clinicianName = clinicianBox.getSelectedItem().toString();
         String clinicianId = clinicianController.getClinicianIdByName(clinicianName);
         String facilityId = clinicianController.getFacilityIdForClinician(clinicianId);
 
-        Appointment a = new Appointment(
-                appointmentController.getNextAppointmentId(),
-                patientId.getText(),
-                clinicianId,
-                facilityId,
-                date.getText(),
-                time.getText(),
-                Integer.parseInt(duration.getText()),
-                type.getText(),
-                "Scheduled",""
-        );
+        Appointment a = new Appointment(appointmentController.getNextAppointmentId(), patientId.getText(), clinicianId, facilityId, date.getText(), time.getText(), Integer.parseInt(duration.getText()), type.getText(), "Scheduled", "");
 
         appointmentController.addAppointment(a);
         loadAppointments();
@@ -238,17 +205,7 @@ public class PatientPanel extends JPanel {
         String clinicianId = clinicianController.getClinicianIdByName(clinicianName);
         String facilityId = clinicianController.getFacilityIdForClinician(clinicianId);
 
-        Appointment a = new Appointment(
-                appointmentTableModel.getValueAt(r, 0).toString(),
-                patientId.getText(),
-                clinicianId,
-                facilityId,
-                appointmentTableModel.getValueAt(r, 3).toString(),
-                appointmentTableModel.getValueAt(r, 4).toString(),
-                Integer.parseInt(appointmentTableModel.getValueAt(r, 5).toString()),
-                appointmentTableModel.getValueAt(r, 6).toString(),
-                appointmentTableModel.getValueAt(r, 7).toString(),""
-        );
+        Appointment a = new Appointment(appointmentTableModel.getValueAt(r, 0).toString(), patientId.getText(), clinicianId, facilityId, appointmentTableModel.getValueAt(r, 3).toString(), appointmentTableModel.getValueAt(r, 4).toString(), Integer.parseInt(appointmentTableModel.getValueAt(r, 5).toString()), appointmentTableModel.getValueAt(r, 6).toString(), appointmentTableModel.getValueAt(r, 7).toString(), "");
 
         appointmentController.updateAppointment(a);
         loadAppointments();
@@ -257,22 +214,7 @@ public class PatientPanel extends JPanel {
     private void savePatient() {
         String gpId = gpSurgeryBox.getSelectedItem().toString().split(" - ")[0];
 
-        Patient p = new Patient(
-                patientId.getText(),
-                nhs.getText(),
-                first.getText(),
-                last.getText(),
-                dob.getText(),
-                gender.getSelectedItem().toString(),
-                phone.getText(),
-                email.getText(),
-                address.getText(),
-                postcode.getText(),
-                ecName.getText(),
-                ecPhone.getText(),
-                regDate.getText(),
-                gpId
-        );
+        Patient p = new Patient(patientId.getText(), first.getText(), last.getText(), dob.getText(), nhs.getText(), gender.getSelectedItem().toString(), phone.getText(), email.getText(), address.getText(), postcode.getText(), ecName.getText(), ecPhone.getText(), regDate.getText(), gpId);
 
         patientController.updatePatient(p);
         JOptionPane.showMessageDialog(this, "Profile Updated");
@@ -285,12 +227,17 @@ public class PatientPanel extends JPanel {
         loadAppointments();
     }
 
-    private JTextField tf() { return new JTextField(15); }
-    private JTextField ro() { JTextField t = new JTextField(15); t.setEditable(false); return t; }
+    private JTextField tf() {
+        return new JTextField(15);
+    }
 
-    private void addRow(JPanel p, GridBagConstraints g, int y,
-                        String l1, JComponent c1,
-                        String l2, JComponent c2) {
+    private JTextField ro() {
+        JTextField t = new JTextField(15);
+        t.setEditable(false);
+        return t;
+    }
+
+    private void addRow(JPanel p, GridBagConstraints g, int y, String l1, JComponent c1, String l2, JComponent c2) {
 
         g.gridy = y;
         g.gridx = 0;
