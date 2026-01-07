@@ -2,46 +2,80 @@ package model;
 
 public class Referral {
 
-    private String referralID;
-    private String gpID;
-    private String specialistID;
-    private String patientID;
+    private String referralId;
+    private String patientId;
+    private String gpId;
+    private String specialistId;
+    private String facilityId;
+    private String reason;
+    private String gpNotes;
+    private String specialistNotes;
     private String status;
+    private String createdDate;
 
-    public Referral(String referralID, String gpID,
-                    String specialistID, String patientID) {
-        this.referralID = referralID;
-        this.gpID = gpID;
-        this.specialistID = specialistID;
-        this.patientID = patientID;
-        this.status = "PENDING";
+    public Referral(String referralId, String patientId, String gpId, String specialistId, String facilityId, String reason, String gpNotes, String specialistNotes, String status, String createdDate) {
+
+        this.referralId = referralId;
+        this.patientId = patientId;
+        this.gpId = gpId;
+        this.specialistId = specialistId;
+        this.facilityId = facilityId;
+        this.reason = reason;
+        this.gpNotes = gpNotes;
+        this.specialistNotes = specialistNotes;
+        this.status = status;
+        this.createdDate = createdDate;
     }
 
-    public String getReferralID() {
-        return referralID;
+    public String getReferralId() {
+        return referralId;
     }
 
-    public String getGpID() {
-        return gpID;
+    public String getPatientId() {
+        return patientId;
     }
 
-    public String getSpecialistID() {
-        return specialistID;
+    public String getGpId() {
+        return gpId;
     }
 
-    public String getPatientID() {
-        return patientID;
+    public String getSpecialistId() {
+        return specialistId;
+    }
+
+    public String getFacilityId() {
+        return facilityId;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public String getGpNotes() {
+        return gpNotes;
+    }
+
+    public String getSpecialistNotes() {
+        return specialistNotes;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public String toFileString() {
-        return referralID + "," +
-                gpID + "," +
-                specialistID + "," +
-                patientID + "," +
-                status;
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setSpecialistNotes(String specialistNotes) {
+        this.specialistNotes = specialistNotes;
+    }
+
+    public String toCsv() {
+        return String.join(",", referralId, patientId, gpId, specialistId, facilityId, reason, gpNotes, specialistNotes, status, createdDate);
     }
 }

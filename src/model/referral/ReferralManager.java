@@ -1,44 +1,49 @@
 package model.referral;
 
+import controller.ReferralController;
 import model.Referral;
 import util.FileUtil;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ReferralManager {
 
     private static ReferralManager instance;
-    private List<Referral> referrals;
+    private ReferralController controller;
 
     private ReferralManager() {
-        referrals = new ArrayList<>();
+        controller = new ReferralController();
     }
 
-    public static ReferralManager getInstance() {
+    public static synchronized ReferralManager getInstance() {
         if (instance == null) {
             instance = new ReferralManager();
         }
         return instance;
     }
 
-    public void addReferral(Referral referral) {
-        referrals.add(referral);
-        FileUtil.appendToFile("data/referrals.txt", referral.toFileString());
+    public void submitReferral(Referral referral) {
+        controller.addReferral(referral);
+        generateReferralEmail(referral);
+        logAudit(referral.getReferralId(), referral.getStatus());
     }
 
-    public List<Referral> getReferrals() {
-        return referrals;
+    public void updateReferralStatus(Referral referral, String status, String specialistNotes) {
+        referral.setStatus(status);
+        referral.setSpecialistNotes(specialistNotes);
+        controller.updateReferral(referral);
+        logAudit(referral.getReferralId(), status);
     }
 
-    public void generateReferralEmail(Referral referral) {
+    private void generateReferralEmail(Referral referral) {
         String email =
-                "To: Specialist ID " + referral.getSpecialistID() + "\n" +
-                        "From: GP ID " + referral.getGpID() + "\n" +
-                        "Patient ID: " + referral.getPatientID() + "\n" +
-                        "Status: " + referral.getStatus() + "\n" +
-                        "Please review patient records.\n";
+                "To: " + referral.getSpecialistId() + "\n" +
+                        "From: " + referral.getGpId() + "\n" +
+                        "Patient: " + referral.getPatientId() + "\n" +
+                        "Reason: " + referral.getReason() + "\n";
 
         FileUtil.appendToFile("data/referral_emails.txt", email);
     }
 
+    private void logAudit(String referralId, String status) {
+        FileUtil.appendToFile("data/referral_audit.txt", referralId + "," + status);
+    }
 }

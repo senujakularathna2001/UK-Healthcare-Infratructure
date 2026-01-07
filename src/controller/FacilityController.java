@@ -58,4 +58,18 @@ public class FacilityController {
         }
         return name;
     }
+
+    public List<String> getFacilityNames() {
+        List<String> list = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE))) {
+            br.readLine();
+            String line;
+            while ((line = br.readLine()) != null) {
+                list.add(line.split(",")[1]);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
